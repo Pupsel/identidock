@@ -1,6 +1,6 @@
 FROM python:latest
 RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi 
-RUN pip install Flask uWSGI requests redis
+#RUN pip install Flask uWSGI requests redis
 WORKDIR /home/identidock/
 COPY app /app
 COPY cmd.sh /
