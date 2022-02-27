@@ -1,15 +1,12 @@
 FROM jenkins/jenkins:2.319.3-jdk11
-USER root
-
-RUN echo "deb http://apt.dockerproject.org/repo debian-jessie main" \
-          > /etc/apt/sources.list.d/docker.list \
-      && apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 \
-          --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
-      && apt-get update \
-      && apt-get install -y apt-transport-https \
-      && apt-get install -y sudo \
-      && apt-get install -y docker-engine \
-      && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y lsb-release
+RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  https://download.docker.com/linux/debian/gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get install -y docker-ce-cli
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 RUN curl -L https://github.com/docker/compose/releases/download/1.4.1/\
