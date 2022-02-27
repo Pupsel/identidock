@@ -1,0 +1,4 @@
+scm-api:latest
+git-content:latest
+git:latest
+greenballs:latest
