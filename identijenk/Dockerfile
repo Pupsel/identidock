@@ -1,4 +1,6 @@
 FROM jenkins/jenkins:2.319.3-jdk11
+USER root
+
 RUN apt-get update && apt-get install -y lsb-release
 RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
   https://download.docker.com/linux/debian/gpg
